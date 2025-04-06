@@ -30,6 +30,7 @@ Whether you’re transitioning from NumPy or starting fresh, these fundamentals 
 6. **Memory Management**
    - Views vs. copies, and GPU-CPU transfers.
 
+---
 
 ### **1.1 Introduction to PyTorch**
 
@@ -97,143 +98,7 @@ tensor([[1.2314, 1.8421, 1.5732],
         [1.6701, 1.3832, 1.9021]])
 ```
 
-
-
-### **1.2 Installation and Setup (CPU/GPU)**
-
-PyTorch can run on both **CPU and GPU (CUDA)** devices. Setting it up correctly ensures optimal performance, especially for deep learning tasks.
-
-## **Step 1: Install PyTorch**
-
-### **Official Installation (via PyTorch.org)**
-
-The easiest way is to use the [official PyTorch installer](https://pytorch.org/get-started/locally/):
-
-1. Go to **https://pytorch.org/get-started/locally/**
-2. Select:
-   - **OS** (Windows, Linux, macOS)
-   - **Package Manager** (`pip` or `conda`)
-   - **Python Version**
-   - **CUDA Version** (if using GPU)
-
-Example:
-
-```bash
-# For CUDA 12.1 (latest stable GPU support)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-
-# For CPU-only (no GPU)
-pip install torch torchvision torchaudio
-```
-
-### **Alternative: Conda (Anaconda/Miniconda)**
-
-```bash
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-```
-
-## **Step 2: Verify Installation**
-
-Check if PyTorch is installed correctly:
-
-```python
-import torch
-
-# Check PyTorch version
-print(torch.__version__)  # e.g., "2.3.0"
-
-# Check if CUDA (GPU support) is available
-print(torch.cuda.is_available())  # True if GPU is detected
-```
-
-✅ **Expected Output:**
-
-```
-2.3.0  
-True  # (If GPU is available)
-```
-
-## **Step 3: GPU Setup (NVIDIA CUDA & cuDNN)**
-
-### **Requirements for GPU Support**
-
-- **NVIDIA GPU** (Check compatibility [here](https://developer.nvidia.com/cuda-gpus))
-- **CUDA Toolkit** (Installs GPU drivers)
-- **cuDNN** (Optimized deep learning library)
-
-### **Install CUDA & cuDNN**
-
-1. **Install CUDA Toolkit**
-   - Download from [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
-   - Example (Linux):
-     ```bash
-     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
-     sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
-     sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub
-     sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /"
-     sudo apt-get update
-     sudo apt-get -y install cuda-12.1
-     ```
-2. **Install cuDNN**
-   - Download from [NVIDIA cuDNN](https://developer.nvidia.com/cudnn) (requires NVIDIA account)
-   - Extract and copy files to CUDA directory:
-     ```bash
-     tar -xzvf cudnn-linux-x86_64-8.x.x.x_cudaX.Y-archive.tar.xz
-     sudo cp cuda/include/* /usr/local/cuda/include/
-     sudo cp cuda/lib64/* /usr/local/cuda/lib64/
-     ```
-
-## **Step 4: Troubleshooting Common Issues**
-
-| Problem                                                   | Solution                                                                                     |
-| --------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| **`torch.cuda.is_available()` returns `False`** | 1. Check GPU compatibility`<br>` 2. Reinstall CUDA/cuDNN `<br>` 3. Update NVIDIA drivers |
-| **"CUDA out of memory"**                            | Reduce batch size or use `torch.cuda.empty_cache()`                                        |
-| **Slow performance on GPU**                         | Ensure `tensor.to(device)` is used correctly                                               |
-| **DLL load failed (Windows)**                       | Install Microsoft Visual C++ Redistributable                                                 |
-
-## **Step 5: Switching Between CPU & GPU**
-
-PyTorch allows seamless switching between devices:
-
-```python
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Move tensors/models to GPU
-x = torch.rand(3, 3).to(device)
-model = MyModel().to(device)
-```
-
-## **Final Check: GPU Benchmarking**
-
-Test if GPU acceleration works:
-
-```python
-import time
-
-# CPU test
-start = time.time()
-a = torch.rand(10000, 10000)
-b = torch.rand(10000, 10000)
-c = a @ b  # Matrix multiplication
-print(f"CPU Time: {time.time() - start:.2f}s")
-
-# GPU test (if available)
-if torch.cuda.is_available():
-    start = time.time()
-    a = a.to("cuda")
-    b = b.to("cuda")
-    c = a @ b
-    print(f"GPU Time: {time.time() - start:.2f}s")
-```
-
-✅ **Expected Output:**
-
-```
-CPU Time: 3.45s  
-GPU Time: 0.12s  # (Much faster!)
-```
-
+---
 
 ### **1.2 Installation and Setup (CPU/GPU)**
 
@@ -321,12 +186,12 @@ True  # (If GPU is available)
 
 ## **Step 4: Troubleshooting Common Issues**
 
-| Problem                                                   | Solution                                                                                     |
-| --------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| **`torch.cuda.is_available()` returns `False`** | 1. Check GPU compatibility`<br>` 2. Reinstall CUDA/cuDNN `<br>` 3. Update NVIDIA drivers |
-| **"CUDA out of memory"**                            | Reduce batch size or use `torch.cuda.empty_cache()`                                        |
-| **Slow performance on GPU**                         | Ensure `tensor.to(device)` is used correctly                                               |
-| **DLL load failed (Windows)**                       | Install Microsoft Visual C++ Redistributable                                                 |
+| Problem                                                   | Solution                                                                                      |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **`torch.cuda.is_available()` returns `False`** | 1. Check GPU compatibility `<br>` 2. Reinstall CUDA/cuDNN `<br>` 3. Update NVIDIA drivers |
+| **"CUDA out of memory"**                            | Reduce batch size or use `torch.cuda.empty_cache()`                                         |
+| **Slow performance on GPU**                         | Ensure `tensor.to(device)` is used correctly                                                |
+| **DLL load failed (Windows)**                       | Install Microsoft Visual C++ Redistributable                                                  |
 
 ## **Step 5: Switching Between CPU & GPU**
 
@@ -369,6 +234,306 @@ if torch.cuda.is_available():
 CPU Time: 3.45s  
 GPU Time: 0.12s  # (Much faster!)
 ```
+
+---
+
+
+
+### **1.3 Tensors: Creation, Operations, and Properties**
+
+Tensors are the fundamental data structure in PyTorch, similar to **NumPy arrays** but with GPU acceleration and automatic differentiation support.
+
+## **1. Tensor Creation**
+
+### **Basic Tensor Creation Methods**
+
+| Method               | Description                | Example                     |
+| -------------------- | -------------------------- | --------------------------- |
+| `torch.tensor()`   | From Python list           | `torch.tensor([1, 2, 3])` |
+| `torch.zeros()`    | Filled with zeros          | `torch.zeros(2, 3)`       |
+| `torch.ones()`     | Filled with ones           | `torch.ones(2, 3)`        |
+| `torch.rand()`     | Uniform random [0, 1)      | `torch.rand(2, 3)`        |
+| `torch.randn()`    | Normal random (μ=0, σ=1) | `torch.randn(2, 3)`       |
+| `torch.arange()`   | Like Python `range()`    | `torch.arange(0, 5)`      |
+| `torch.linspace()` | Linear spacing             | `torch.linspace(0, 1, 5)` |
+
+**Example:**
+
+```python
+import torch
+
+# Create tensors
+a = torch.tensor([[1, 2], [3, 4]])  # From list
+b = torch.zeros(2, 3)                # 2x3 zeros
+c = torch.rand(3, 3)                  # 3x3 random
+```
+
+## **2. Tensor Properties**
+
+| Property           | Description                  | Example                  |
+| ------------------ | ---------------------------- | ------------------------ |
+| `.shape`         | Tensor dimensions            | `tensor.shape`         |
+| `.dtype`         | Data type (e.g.,`float32`) | `tensor.dtype`         |
+| `.device`        | CPU/GPU location             | `tensor.device`        |
+| `.requires_grad` | For autograd                 | `tensor.requires_grad` |
+
+**Example:**
+
+```python
+x = torch.rand(2, 3, dtype=torch.float32)
+
+print(x.shape)      # torch.Size([2, 3])
+print(x.dtype)      # torch.float32
+print(x.device)     # cpu (or cuda:0)
+print(x.requires_grad)  # False (default)
+```
+
+## **3. Tensor Operations**
+
+### **Basic Math Operations**
+
+| Operation             | Syntax                      | Example    |
+| --------------------- | --------------------------- | ---------- |
+| Addition              | `+` or `torch.add()`    | `a + b`  |
+| Subtraction           | `-` or `torch.sub()`    | `a - b`  |
+| Multiplication        | `*` (element-wise)        | `a * b`  |
+| Matrix Multiplication | `@` or `torch.matmul()` | `a @ b`  |
+| Division              | `/` or `torch.div()`    | `a / b`  |
+| Exponentiation        | `**` or `torch.pow()`   | `a ** 2` |
+
+**Example:**
+
+```python
+a = torch.tensor([1, 2])
+b = torch.tensor([3, 4])
+
+print(a + b)    # tensor([4, 6])
+print(a * b)    # tensor([3, 8]) (element-wise)
+print(a @ b)    # tensor(11) (dot product)
+```
+
+### **In-Place Operations (Modify tensor directly)**
+
+Use `_` suffix (e.g., `add_()` instead of `add()`):
+
+```python
+a = torch.tensor([1, 2])
+a.add_(1)  # Modifies 'a' directly
+print(a)   # tensor([2, 3])
+```
+
+## **4. Reshaping & Slicing Tensors**
+
+| Operation              | Syntax                            | Example            |
+| ---------------------- | --------------------------------- | ------------------ |
+| Reshape                | `.view()` or `.reshape()`     | `a.view(3, 2)`   |
+| Transpose              | `.t()` or `torch.transpose()` | `a.t()`          |
+| Squeeze (remove 1-dim) | `.squeeze()`                    | `a.squeeze()`    |
+| Unsqueeze (add 1-dim)  | `.unsqueeze()`                  | `a.unsqueeze(0)` |
+
+**Example:**
+
+```python
+x = torch.rand(4, 4)
+
+# Reshape to 2x8
+y = x.view(2, 8)  
+
+# Transpose (swap dimensions)
+z = x.t()  
+
+# Add batch dimension (1x4x4)
+batch = x.unsqueeze(0)  
+```
+
+## **5. Tensor Data Types & Conversion**
+
+### **Common Data Types**
+
+| Type              | Description     |
+| ----------------- | --------------- |
+| `torch.float32` | Default float   |
+| `torch.int64`   | Default integer |
+| `torch.bool`    | Boolean         |
+
+**Convert between types:**
+
+```python
+a = torch.tensor([1, 2], dtype=torch.float32)
+b = a.int()  # Convert to int
+c = a.to(torch.double)  # Alternative syntax
+```
+
+## **6. Moving Tensors to GPU**
+
+```python
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Move tensor to GPU
+x = torch.rand(2, 2).to(device)  
+
+# Or create directly on GPU
+y = torch.ones(2, 2, device="cuda")  
+```
+
+## **7. Tensor ↔ NumPy Conversion**
+
+```python
+import numpy as np
+
+# Tensor → NumPy
+a = torch.rand(2, 2)
+b = a.numpy()  # Shares memory (changes affect both)
+
+# NumPy → Tensor
+c = np.array([1, 2])
+d = torch.from_numpy(c)  # Also shares memory
+```
+
+### **Advanced Tensor Manipulation Cheatsheet**
+
+#### **1. Concatenation & Stacking**
+
+| Operation             | Syntax            | Example                        | Use Case                               |
+| --------------------- | ----------------- | ------------------------------ | -------------------------------------- |
+| **Concatenate** | `torch.cat()`   | `torch.cat([a, b], dim=0)`   | Merge tensors along existing dimension |
+| **Stack**       | `torch.stack()` | `torch.stack([a, b], dim=0)` | Create new dimension for merging       |
+| **Split**       | `torch.split()` | `a.split(2, dim=1)`          | Divide tensor into chunks              |
+| **Chunk**       | `torch.chunk()` | `a.chunk(3, dim=0)`          | Evenly split tensor                    |
+
+**Example:**
+
+```python
+a = torch.tensor([[1, 2], [3, 4]])
+b = torch.tensor([[5, 6]])
+
+# Concatenate vertically (dim=0)
+cat = torch.cat([a, b], dim=0)  
+# tensor([[1, 2], [3, 4], [5, 6]])
+
+# Stack to create batch dimension
+stacked = torch.stack([a, a], dim=0)  
+# tensor([[[1, 2], [3, 4]], [[1, 2], [3, 4]]])
+```
+
+#### **2. Reduction Operations**
+
+| Operation         | Syntax                | Example             | Result Shape              |
+| ----------------- | --------------------- | ------------------- | ------------------------- |
+| **Sum**     | `.sum()`            | `a.sum(dim=1)`    | Collapses specified dim   |
+| **Mean**    | `.mean()`           | `a.mean()`        | Scalar if no dim          |
+| **Max**     | `.max()`            | `a.max(dim=0)`    | Returns (values, indices) |
+| **Argmax**  | `.argmax()`         | `a.argmax(dim=1)` | Only indices              |
+| **Min**     | `.min()`            | `a.min()`         | -                         |
+| **All/Any** | `.all()`/`.any()` | `(a > 0).all()`   | Boolean output            |
+
+**Example:**
+
+```python
+x = torch.tensor([[1, 2], [3, 4]])
+
+print(x.sum(dim=0))   # tensor([4, 6]) (sum columns)
+print(x.argmax(dim=1)) # tensor([1, 1]) (indices of max rows)
+```
+
+#### **3. Advanced Indexing**
+
+| Technique                 | Syntax                   | Example                            |
+| ------------------------- | ------------------------ | ---------------------------------- |
+| **Boolean Masking** | `tensor[mask]`         | `a[a > 2]`                       |
+| **Gather**          | `torch.gather()`       | `torch.gather(a, 1, indices)`    |
+| **Scatter**         | `torch.scatter()`      | `a.scatter_(0, indices, values)` |
+| **Index Select**    | `torch.index_select()` | `a.index_select(0, idx)`         |
+
+**Example:**
+
+```python
+a = torch.tensor([[1, 2], [3, 4]])
+
+# Boolean masking
+print(a[a > 2])  # tensor([3, 4])
+
+# Gather (advanced lookup)
+indices = torch.tensor([[0, 0], [1, 0]])
+print(torch.gather(a, 1, indices))  # tensor([[1, 1], [4, 3]])
+```
+
+#### **4. Matrix Operations**
+
+| Operation             | Syntax              | Notes                        |
+| --------------------- | ------------------- | ---------------------------- |
+| **Inverse**     | `torch.inverse()` | Square matrices only         |
+| **SVD**         | `torch.svd()`     | Singular Value Decomposition |
+| **Eigendecomp** | `torch.eig()`     | Eigenvalues/vectors          |
+| **Trace**       | `torch.trace()`   | Sum of diagonal              |
+| **Diag**        | `torch.diag()`    | Extract/create diagonal      |
+
+**Example:**
+
+```python
+a = torch.tensor([[2., 1.], [1., 2.]], dtype=torch.float32)
+
+print(torch.inverse(a))  # Matrix inverse
+print(torch.svd(a))      # U, S, V matrices
+```
+
+#### **5. Memory & Optimization**
+
+| Operation            | Syntax            | Purpose                        |
+| -------------------- | ----------------- | ------------------------------ |
+| **Clone**      | `.clone()`      | Copies memory                  |
+| **Detach**     | `.detach()`     | Removes from computation graph |
+| **Pin Memory** | `.pin_memory()` | Faster GPU transfer            |
+| **Contiguous** | `.contiguous()` | Ensures memory layout          |
+
+**Example:**
+
+```python
+a = torch.rand(3, 3)
+
+# Clone vs. detach
+b = a.clone()    # New memory, keeps grad
+c = a.detach()   # Shares memory, no grad
+
+# For DataLoader speedup
+pinned = a.pin_memory()  # Used with CUDA
+```
+
+#### **6. Special Tensor Types**
+
+| Type                    | Syntax                        | Use Case                  |
+| ----------------------- | ----------------------------- | ------------------------- |
+| **Sparse**        | `torch.sparse_coo_tensor()` | NLP embeddings            |
+| **Masked**        | `torch.masked_select()`     | Handling padded sequences |
+| **Named Tensors** | `a.refine_names()`          | Self-documenting code     |
+
+**Example (Sparse Tensor):**
+
+```python
+indices = torch.tensor([[0, 1], [2, 0]])
+values = torch.tensor([3, 4], dtype=torch.float32)
+sparse = torch.sparse_coo_tensor(indices, values, size=(3, 3))
+```
+
+### **When to Use Which?**
+
+- **Concatenate/Stack**: Building batches or merging features.
+- **Reductions**: Loss calculations, statistics.
+- **Advanced Indexing**: Custom loss functions, embeddings.
+- **Matrix Ops**: Linear algebra-heavy models (e.g., PCA).
+- **Memory Ops**: Optimizing GPU transfers.
+
+### **Pro Tips**
+
+1. **Use `einops` for complex reshaping**:
+   ```python
+   from einops import rearrange
+   x = rearrange(x, 'b c h w -> b (c h w)')  # Flatten
+   ```
+2. **Avoid in-place ops in autograd** (can break gradients).
+3. **Prefer `view()` over `reshape()`** when possible (memory-efficient).
+
+---
 
 
 
@@ -532,6 +697,8 @@ x.index_fill_(1, torch.tensor([0, 2]), -1)  # Columns 0 & 2 set to -1
 | Conditional select | `tensor[mask]` or `torch.where()` |
 | Fancy indexing     | `tensor[[row_idx], [col_idx]]`      |
 | Modify in-place    | `tensor[idx] = value`               |
+
+---
 
 
 
@@ -780,6 +947,9 @@ Error: Dim 1 is 4 (A) vs 2 (B) → Neither is 1!
 
 **Visual Mnemonic**:
 Imagine "expanding" the smaller tensor like a rubber band to fit the larger one’s shape, but only if the dimensions are compatible!
+
+
+---
 
 
 
@@ -1061,10 +1231,10 @@ def train_optimized():
         with torch.cuda.amp.autocast():
             outputs = model(inputs.cuda(non_blocking=True))
             loss = criterion(outputs, targets.cuda(non_blocking=True))
-      
+    
         # 4. Overlap compute/data transfer
         next_inputs, next_targets = prefetch_next_batch(loader)
-      
+    
         # 5. Memory-efficient backward
         scaler.scale(loss).backward()
         if i % 2 == 0:  # Accumulate gradients
