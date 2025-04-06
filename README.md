@@ -1,7 +1,7 @@
 
 # PyTorch Developer's Handbook 🚀
 
-![PyTorch Logo](https://pytorch.org/assets/images/pytorch-logo.png)
+![PyTorch Logo](https://res.cloudinary.com/dyl5ibyvg/image/upload/v1743871363/r3xcjz6gmlkp1lgjuhyn.jpg)
 
 Welcome to the **PyTorch Developer's Handbook**! This repository contains all my notes, code examples, and practical implementations as I learn PyTorch for AI/ML development. Whether you're a beginner or an intermediate practitioner, this structured roadmap will help you master PyTorch from fundamentals to advanced topics.
 
